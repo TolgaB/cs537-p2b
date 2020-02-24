@@ -18,6 +18,7 @@ USER_PROGS := \
 	wc\
 	ticks-test\
 	single_job_long\
+	round_robin\
 	zombie
 
 USER_PROGS := $(addprefix user/, $(USER_PROGS))

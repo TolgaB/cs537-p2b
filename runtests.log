@@ -8,96 +8,7 @@ build xv6 using make
 **********************************************************************
 Trying to build project using make
 make
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG user/single_job_long.c -MF user/single_job_long.d -MT user/single_job_long.d -MT user/single_job_long.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/vm.c -MF kernel/vm.d -MT kernel/vm.d -MT kernel/vm.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/uart.c -MF kernel/uart.d -MT kernel/uart.d -MT kernel/uart.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/trap.c -MF kernel/trap.d -MT kernel/trap.d -MT kernel/trap.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/sysproc.c -MF kernel/sysproc.d -MT kernel/sysproc.d -MT kernel/sysproc.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/sysfile.c -MF kernel/sysfile.d -MT kernel/sysfile.d -MT kernel/sysfile.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/syscall.c -MF kernel/syscall.d -MT kernel/syscall.d -MT kernel/syscall.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/spinlock.c -MF kernel/spinlock.d -MT kernel/spinlock.d -MT kernel/spinlock.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/proc.c -MF kernel/proc.d -MT kernel/proc.d -MT kernel/proc.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/pipe.c -MF kernel/pipe.d -MT kernel/pipe.d -MT kernel/pipe.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/mp.c -MF kernel/mp.d -MT kernel/mp.d -MT kernel/mp.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/main.c -MF kernel/main.d -MT kernel/main.d -MT kernel/main.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/ide.c -MF kernel/ide.d -MT kernel/ide.d -MT kernel/ide.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/fs.c -MF kernel/fs.d -MT kernel/fs.d -MT kernel/fs.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/exec.c -MF kernel/exec.d -MT kernel/exec.d -MT kernel/exec.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 \
-	-M -MG kernel/console.c -MF kernel/console.d -MT kernel/console.d -MT kernel/console.o
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/console.o kernel/console.c
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/exec.o kernel/exec.c
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/fs.o kernel/fs.c
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/ide.o kernel/ide.c
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/main.o kernel/main.c
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/mp.o kernel/mp.c
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/pipe.o kernel/pipe.c
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/proc.o kernel/proc.c
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/spinlock.o kernel/spinlock.c
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/syscall.o kernel/syscall.c
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/sysfile.o kernel/sysfile.c
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/sysproc.o kernel/sysproc.c
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/trap.o kernel/trap.c
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/uart.o kernel/uart.c
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o kernel/vm.o kernel/vm.c
-ld  -m    elf_i386 -nostdlib --omagic \
-	--section-start=.text=0x100000 --entry=main --output=kernel/kernel \
-	kernel/multiboot.o kernel/data.o kernel/bio.o kernel/console.o kernel/exec.o kernel/file.o kernel/fs.o kernel/ide.o kernel/ioapic.o kernel/kalloc.o kernel/kbd.o kernel/lapic.o kernel/main.o kernel/mp.o kernel/picirq.o kernel/pipe.o kernel/proc.o kernel/spinlock.o kernel/string.o kernel/swtch.o kernel/syscall.o kernel/sysfile.o kernel/sysproc.o kernel/timer.o kernel/trapasm.o kernel/trap.o kernel/uart.o kernel/vectors.o kernel/vm.o \
-	-b binary initcode bootother
-dd if=/dev/zero of=xv6.img count=10000
-10000+0 records in
-10000+0 records out
-5120000 bytes (5.1 MB, 4.9 MiB) copied, 0.0228548 s, 224 MB/s
-dd if=kernel/bootblock of=xv6.img conv=notrunc
-1+0 records in
-1+0 records out
-512 bytes copied, 5.9863e-05 s, 8.6 MB/s
-dd if=kernel/kernel of=xv6.img seek=1 conv=notrunc
-269+1 records in
-269+1 records out
-137904 bytes (138 kB, 135 KiB) copied, 0.000513174 s, 269 MB/s
-gcc  -I include -nostdinc -Wall -Werror -ggdb -fno-pic -fno-builtin -fno-strict-aliasing -fno-stack-protector -m32 -c -o user/single_job_long.o user/single_job_long.c
-ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --output=user/bin/single_job_long user/single_job_long.o user/ulib.o user/usys.o user/printf.o user/umalloc.o
-cp user/bin/single_job_long fs/single_job_long
-./tools/mkfs fs.img fs
-used 29 (bit 1 ninode 26) free 29 total 1024
-README
-cat
-rm
-forktest
-tester
-wc
-zombie
-stressfs
-init
-echo
-mkdir
-ls
-sh
-kill
-single_job_long
-usertests
-ticks-test
-grep
-ln
-balloc: first 452 blocks have been allocated
-balloc: write bitmap block at sector 28
-rm user/bin/single_job_long
+make: Nothing to be done for 'all'.
 
 
 test build PASSED
@@ -121,26 +32,28 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-README
-cat
-rm
-forktest
-tester
-wc
-zombie
-stressfs
+usertests
+round_robin
+.__afs838E
 init
+wc
+ticks-test
+zombie
+single_job_long
 echo
+ln
+README
+kill
+tester
+rm
+stressfs
+grep
+forktest
 mkdir
 ls
+cat
 sh
-kill
-single_job_long
-usertests
-ticks-test
-grep
-ln
-balloc: first 454 blocks have been allocated
+balloc: first 500 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
 make qemu-nox CPUS=1
@@ -180,26 +93,28 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-README
-cat
-rm
-forktest
-tester
-wc
-zombie
-stressfs
+usertests
+round_robin
+.__afs838E
 init
+wc
+ticks-test
+zombie
+single_job_long
 echo
+ln
+README
+kill
+tester
+rm
+stressfs
+grep
+forktest
 mkdir
 ls
+cat
 sh
-kill
-single_job_long
-usertests
-ticks-test
-grep
-ln
-balloc: first 454 blocks have been allocated
+balloc: first 500 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
 make qemu-nox CPUS=1
@@ -219,7 +134,7 @@ tester
 pid: 1 priority: 2
  	 level 3 ticks used 8
 	 level 3 ticks waited for 0
-	 level 2 ticks used 7
+	 level 2 ticks used 8
 	 level 2 ticks waited for 0
 	 level 1 ticks used 0
 	 level 1 ticks waited for 0
@@ -228,7 +143,7 @@ pid: 1 priority: 2
 pid: 2 priority: 2
  	 level 3 ticks used 8
 	 level 3 ticks waited for 0
-	 level 2 ticks used 12
+	 level 2 ticks used 11
 	 level 2 ticks waited for 0
 	 level 1 ticks used 0
 	 level 1 ticks waited for 0
@@ -237,7 +152,7 @@ pid: 2 priority: 2
 pid: 3 priority: 2
  	 level 3 ticks used 8
 	 level 3 ticks waited for 0
-	 level 2 ticks used 1
+	 level 2 ticks used 2
 	 level 2 ticks waited for 0
 	 level 1 ticks used 0
 	 level 1 ticks waited for 0
@@ -266,26 +181,28 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-README
-cat
-rm
-forktest
-tester
-wc
-zombie
-stressfs
+usertests
+round_robin
+.__afs838E
 init
+wc
+ticks-test
+zombie
+single_job_long
 echo
+ln
+README
+kill
+tester
+rm
+stressfs
+grep
+forktest
 mkdir
 ls
+cat
 sh
-kill
-single_job_long
-usertests
-ticks-test
-grep
-ln
-balloc: first 457 blocks have been allocated
+balloc: first 503 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
 make qemu-nox CPUS=1
@@ -304,7 +221,7 @@ $ tester
 tester
 pid: 1
 	 level 3 ticks used 8
-	 level 2 ticks used 7
+	 level 2 ticks used 8
 	 level 1 ticks used 0
 	 level 0 ticks used 0
 pid: 2
@@ -316,7 +233,7 @@ pid: 3
 	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 44
+	 level 0 ticks used 49
 TEST PASSED
 
 test single_job_long PASSED (1 of 1)
@@ -340,26 +257,28 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-README
-cat
-rm
-forktest
-tester
-wc
-zombie
-stressfs
+usertests
+round_robin
+.__afs838E
 init
+wc
+ticks-test
+zombie
+single_job_long
 echo
+ln
+README
+kill
+tester
+rm
+stressfs
+grep
+forktest
 mkdir
 ls
+cat
 sh
-kill
-single_job_long
-usertests
-ticks-test
-grep
-ln
-balloc: first 455 blocks have been allocated
+balloc: first 501 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
 make qemu-nox CPUS=1
@@ -380,7 +299,7 @@ pid: 3 priority: 1
  	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 42
+	 level 0 ticks used 47
 TEST PASSED
 
 test boostproc PASSED (1 of 1)
@@ -404,26 +323,28 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-README
-cat
-rm
-forktest
-tester
-wc
-zombie
-stressfs
+usertests
+round_robin
+.__afs838E
 init
+wc
+ticks-test
+zombie
+single_job_long
 echo
+ln
+README
+kill
+tester
+rm
+stressfs
+grep
+forktest
 mkdir
 ls
+cat
 sh
-kill
-single_job_long
-usertests
-ticks-test
-grep
-ln
-balloc: first 455 blocks have been allocated
+balloc: first 501 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
 make qemu-nox CPUS=1
@@ -444,7 +365,7 @@ pid: 3 priority: 0
  	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 43
+	 level 0 ticks used 49
 pid: 4 priority: 3
  	 level 3 ticks used 1
 	 level 2 ticks used 0
@@ -473,26 +394,28 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-README
-cat
-rm
-forktest
-tester
-wc
-zombie
-stressfs
+usertests
+round_robin
+.__afs838E
 init
+wc
+ticks-test
+zombie
+single_job_long
 echo
+ln
+README
+kill
+tester
+rm
+stressfs
+grep
+forktest
 mkdir
 ls
+cat
 sh
-kill
-single_job_long
-usertests
-ticks-test
-grep
-ln
-balloc: first 456 blocks have been allocated
+balloc: first 502 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
 make qemu-nox CPUS=1
@@ -514,14 +437,149 @@ pid: 4
 	 level 3 waited for ticks 0
 	 level 2 ticks used 16
 	 level 2 waited for ticks 0
-	 level 1 ticks used 4
-	 level 1 waited for ticks 9
-user/tester.c:62 check (st.ticks[j][k] % time_slices[k] == 0) failed: All processes have used up the timer ticks in level 3, 2 and 1
-$ 
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 0
+	 level 0 waited for ticks 1
+pid: 5
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 0
+	 level 0 waited for ticks 13
+pid: 6
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 0
+	 level 0 waited for ticks 9
+pid: 7
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 0
+	 level 0 waited for ticks 5
+pid: 4
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 26
+	 level 0 waited for ticks 0
+pid: 5
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 26
+	 level 0 waited for ticks 0
+pid: 6
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 25
+	 level 0 waited for ticks 0
+pid: 7
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 27
+	 level 0 waited for ticks 0
+pid: 4
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 26
+	 level 0 waited for ticks 0
+pid: 5
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 26
+	 level 0 waited for ticks 0
+pid: 6
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 25
+	 level 0 waited for ticks 0
+pid: 7
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 27
+	 level 0 waited for ticks 0
+pid: 4
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 26
+	 level 0 waited for ticks 0
+pid: 5
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 26
+	 level 0 waited for ticks 0
+pid: 6
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 25
+	 level 0 waited for ticks 0
+pid: 7
+	 level 3 ticks used 8
+	 level 3 waited for ticks 0
+	 level 2 ticks used 16
+	 level 2 waited for ticks 0
+	 level 1 ticks used 32
+	 level 1 waited for ticks 0
+	 level 0 ticks used 27
+	 level 0 waited for ticks 0
+TEST PASSED
 
-test round_robin FAILED (0 of 1)
+test round_robin PASSED (1 of 1)
  (All processes have an equal chance of execution)
- tester failed
 
 starting relinquish
 
@@ -541,26 +599,28 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-README
-cat
-rm
-forktest
-tester
-wc
-zombie
-stressfs
+usertests
+round_robin
+.__afs838E
 init
+wc
+ticks-test
+zombie
+single_job_long
 echo
+ln
+README
+kill
+tester
+rm
+stressfs
+grep
+forktest
 mkdir
 ls
+cat
 sh
-kill
-single_job_long
-usertests
-ticks-test
-grep
-ln
-balloc: first 456 blocks have been allocated
+balloc: first 502 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
 make qemu-nox CPUS=1
@@ -580,19 +640,127 @@ tester
 pid: 4
 	 level 3 ticks used 8
 	 level 2 ticks used 16
-	 level 1 ticks used 0
+	 level 1 ticks used 32
 	 level 0 ticks used 0
 pid: 5
 	 level 3 ticks used 8
 	 level 2 ticks used 16
-	 level 1 ticks used 4
-user/tester.c:68 check (st.ticks[j][k] % time_slices[k] == 0) failed: Timer ticks above level 0 should be used up
+	 level 1 ticks used 32
+	 level 0 ticks used 0
+pid: 4
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 64
+pid: 5
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 64
+pid: 4
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 128
+pid: 5
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 107
+pid: 4
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 192
+pid: 5
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 108
+pid: 4
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 256
+pid: 5
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 109
+pid: 4
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 268
+pid: 5
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 110
+pid: 4
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 268
+pid: 5
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 120
+pid: 4
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 268
+pid: 5
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 130
+pid: 4
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 268
+pid: 5
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 140
+pid: 4
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 268
+pid: 5
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 150
+pid: 4
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 268
+pid: 5
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 160
+pid: 4
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 268
+pid: 5
+	 level 3 ticks used 8
+	 level 2 ticks used 16
+	 level 1 ticks used 32
+	 level 0 ticks used 170
+TEST PASSED
 
-$ 
-
-test relinquish FAILED (0 of 1)
+test relinquish PASSED (1 of 1)
  (Processes relinquished CPU resources should maintain their time slices)
- tester failed
 
 starting priority_boost
 
@@ -612,26 +780,28 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-README
-cat
-rm
-forktest
-tester
-wc
-zombie
-stressfs
+usertests
+round_robin
+.__afs838E
 init
+wc
+ticks-test
+zombie
+single_job_long
 echo
+ln
+README
+kill
+tester
+rm
+stressfs
+grep
+forktest
 mkdir
 ls
+cat
 sh
-kill
-single_job_long
-usertests
-ticks-test
-grep
-ln
-balloc: first 456 blocks have been allocated
+balloc: first 502 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
 make qemu-nox CPUS=1
@@ -650,15 +820,15 @@ $ tester
 tester
 	 level 3 ticks used 8
 	 level 2 ticks used 16
-	 level 1 ticks used 96
-	 level 0 ticks used 67
+	 level 1 ticks used 32
+	 level 0 ticks used 119
 	 The priority of the parent process is 1
 After priority gets updated and scheduled for some time
 pid: 3
 	 level 3 ticks used 8
 	 level 2 ticks used 16
-	 level 1 ticks used 128
-	 level 0 ticks used 135
+	 level 1 ticks used 64
+	 level 0 ticks used 188
 TEST PASSED
 
 test priority_boost PASSED (1 of 1)
@@ -682,26 +852,28 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-README
-cat
-rm
-forktest
-tester
-wc
-zombie
-stressfs
+usertests
+round_robin
+.__afs838E
 init
+wc
+ticks-test
+zombie
+single_job_long
 echo
+ln
+README
+kill
+tester
+rm
+stressfs
+grep
+forktest
 mkdir
 ls
+cat
 sh
-kill
-single_job_long
-usertests
-ticks-test
-grep
-ln
-balloc: first 455 blocks have been allocated
+balloc: first 501 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
 make qemu-nox CPUS=1
@@ -1064,13 +1236,11 @@ test boostproc PASSED (1 of 1)
 test new_process PASSED (1 of 1)
  (New process should have higher priority)
 
-test round_robin FAILED (0 of 1)
+test round_robin PASSED (1 of 1)
  (All processes have an equal chance of execution)
- tester failed
 
-test relinquish FAILED (0 of 1)
+test relinquish PASSED (1 of 1)
  (Processes relinquished CPU resources should maintain their time slices)
- tester failed
 
 test priority_boost PASSED (1 of 1)
  ((stronger) test on boostproc)
@@ -1078,6 +1248,6 @@ test priority_boost PASSED (1 of 1)
 test wait_times PASSED (1 of 1)
  (Wait time should not exceed the expected ticks)
 
-Passed 8 of 10 tests.
-Overall 8 of 10
-Points 7 of 9
+Passed 10 of 10 tests.
+Overall 10 of 10
+Points 9 of 9

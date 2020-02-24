@@ -100,7 +100,7 @@ boostproc(void)
 	       int newPrior = (proc->priority - 1);
 	       int oldPrior = (proc->priority);
                //TODO: not sure about this indexing right here
-               procQueue[newPrior][procCount[newPrior]%NPROC] = proc;
+	       procQueue[newPrior][procCount[newPrior]%NPROC] = proc;
                for (int i = 0; i < NPROC; i++) {
                        if (procQueue[oldPrior][i] == proc) {
                                 procQueue[oldPrior][i] = NULL;
@@ -347,7 +347,7 @@ scheduler(void)
   timeSliceSize[0] = 8; 
   timeSliceSize[1] = 16;
   timeSliceSize[2] = 32;
-  timeSliceSize[3] = __INT_MAX__;
+  timeSliceSize[3] = 64;
   //round-robin slice sizes
   int rrSliceSize[4];
   rrSliceSize[0] = 1;
@@ -391,13 +391,14 @@ scheduler(void)
 		if (qStartIndex[j] == -1) {
 			break;
 		}
-		//if no existing process there 
-		if (procQueue[j][i%NPROC] == NULL) {
+		//if no existing process there or not runnable 
+		if ((procQueue[j][i%NPROC] == NULL) || ((procQueue[j][i%NPROC]->state) != RUNNABLE)) {
 			continue;
 		}
 		//use wrap-around indexing
 		//check to make sure it hasnt used up its time slice and is runnable
-		if (procQueue[j][(i%NPROC)]->ticks >= timeSliceSize[j]) {
+		//dont demote if on lvl 3
+		if ((procQueue[j][(i%NPROC)]->ticks >= timeSliceSize[j]) && (j != 3)) {
 			//demote
 			//will never demote lvl 4 so dont worry
 			procQueue[j+1][(procCount[j+1]%NPROC)] = procQueue[j][(i%NPROC)];
@@ -409,9 +410,12 @@ scheduler(void)
 			procQueue[j+1][(procCount[j+1]%NPROC)]->ticks = 0;
 			procQueue[j+1][(procCount[j+1]%NPROC)]->wait_ticks = 0;
 			procQueue[j+1][(procCount[j+1]%NPROC)]->slice_ticks = 0;
-			robinPlace[j+1] = procQueue[j+1][(procCount[j+1]%NPROC)];
+			//only update the demoted queues round robin start pointer if no others
+			if (qStartIndex[j+1] == -1) {
+				robinPlace[j+1] = procQueue[j+1][(procCount[j+1]%NPROC)];
+				qStartIndex[j+1] = (procCount[j+1]%NPROC);
+			}
 			robinPlace[j] = NULL;
-			qStartIndex[j+1] = (procCount[j+1]%NPROC);
 			procCount[j+1]++;
 			procElems[j+1]++;
 		} else {
@@ -420,10 +424,7 @@ scheduler(void)
 				//move on to next proc in queue and reset rrSlice for proc, add to wait ticks
 				//might lose a tick if it is the only process
 				(procQueue[j][i%NPROC]->slice_ticks) = 0;
-				//TODO: JUST ADDED THIS
-				if ((procQueue[j][(i%NPROC)]->state) == RUNNABLE) {
-					(procQueue[j][i%NPROC]->wait_ticks)++;
-				}
+				(procQueue[j][i%NPROC]->wait_ticks)++;
 			} else {
 				if ((procQueue[j][(i%NPROC)]->slice_ticks >= rrSliceSize[j]) && (procQueue[j][(i%NPROC)]->state) == RUNNABLE ) {
 					(procQueue[j][i%NPROC]->slice_ticks) = 0;
@@ -445,14 +446,16 @@ scheduler(void)
 					//TODO: JUST ADDED THIS
 				   if ((procQueue[j][(i%NPROC)]->state) == RUNNABLE) {
 					//wait and starvation stuff here
-					(procQueue[j][(i%NPROC)]->wait_ticks)++;
 					if (procQueue[j][(i%NPROC)]->wait_ticks >= (10*timeSliceSize[j])) {
 						//promote the proc (boost)
 						//not sure what consequences of changing global is
+						//TODO: clear the wait ticks for highest prior?
 						if (procQueue[j][(i%NPROC)]->priority != 0) {
 							proc = procQueue[j][(i%NPROC)];
 							boostproc();
 						}
+					} else {
+						(procQueue[j][(i%NPROC)]->wait_ticks)++;
 					}
 				   }
 				}
