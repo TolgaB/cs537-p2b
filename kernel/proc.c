@@ -16,6 +16,9 @@ static struct proc *initproc;
 struct proc* procQueue[4][NPROC];
 //need to add counters for each arrays wrap around indexing
 int procCount[4];
+//keeps track of current elems inside
+int procElems[4];
+struct proc* robinPlace[4];
 
 int nextpid = 1;
 extern void forkret(void);
@@ -74,7 +77,7 @@ found:
   
   //P2B changes, intialize to highest priority 
   //and start tick off at 0
-  p->priority = 3;
+  p->priority = 0;
   p->ticks = 0;
   for (int i = 0; i < 4; i++) {
 	  p->total_ticks[i] = 0;
@@ -82,7 +85,10 @@ found:
   p->slice_ticks = 0;
   p->wait_ticks = 0;
   procQueue[0][(procCount[0]%NPROC)] = p;
+  robinPlace[0] = procQueue[0][(procCount[0]%NPROC)];
   procCount[0]++;
+  procElems[0]++;
+  cprintf("allocd proc LOL %d\n", p->pid);
   return p;
 }
 
@@ -244,13 +250,6 @@ wait(void)
         p->parent = 0;
         p->name[0] = 0;
         p->killed = 0;
-	p->priority = 0;
-	p->ticks = 0;
-	p->slice_ticks = 0;
-	p->wait_ticks = 0;
-	for (int i = 0; i < 4; i++) {
-		p->total_ticks[i] = 0;
-	}
         release(&ptable.lock);
         return pid;
       }
@@ -277,14 +276,13 @@ wait(void)
 void
 scheduler(void)
 {
-  struct proc *p;
 
   //time slice sizes
   int timeSliceSize[4];
   timeSliceSize[0] = 8; 
   timeSliceSize[1] = 16;
   timeSliceSize[2] = 32;
-  timeSliceSize[3] = INT_MAX;
+  timeSliceSize[3] = __INT_MAX__;
   //round-robin slice sizes
   int rrSliceSize[4];
   rrSliceSize[0] = 1;
@@ -292,11 +290,6 @@ scheduler(void)
   rrSliceSize[2] = 4;
   rrSliceSize[3] = 64;
   
-  //keeps track of the last run process for each level of  RR
-  struct proc* robinPlace[4]; 
-  //set the first process as the last run command for RR
-  robinPlace[0] = procQueue[0][0];
-
   //each for loop is 1 tick
   for(;;){
     // Enable interrupts on this processor.
@@ -304,7 +297,8 @@ scheduler(void)
 
     acquire(&ptable.lock);
     int foundRunP = 0;
-    struct proc *runProc;  
+    struct proc *runProc; 
+    runProc = NULL; 
     int qStartIndex[4]; 
     for (int r = 0; r < 4; r++) {
 	    qStartIndex[r] = -1;
@@ -312,9 +306,12 @@ scheduler(void)
     //TODO: I think that I can get away with not keeping track of the pointer since 
     //I'm always the one updating it in the code 
     for (int m = 0; m < 4; m++) {
+	//TODO:if no robinPlace need to choose one
 	//maybe use procCount over NPROC in the future
     	for (int n = 0; n < NPROC; n++) {
-		if (procQueue[m][n] == robinPlace[m]) {
+		if ((procQueue[m][n] == robinPlace[m]) && (procQueue[m][n] != NULL)) {
+			qStartIndex[m] = n;
+		} else if ((robinPlace[m] == NULL) && (procQueue[m][n] != NULL)) {
 			qStartIndex[m] = n;
 		}
     	}
@@ -323,32 +320,56 @@ scheduler(void)
     //Update the queues
     for (int j = 0; j < 4; j++) {
 	    //need to begin to use wrap-around indexing
-    	for (int i = qStartIndex[j]; i < (procCount[j]+qStartIndex[j]); i++) {
+    	for (int i = qStartIndex[j]; i < (NPROC+qStartIndex[j]); i++) {
 		//make sure there is a proc at this queue lvl
 		if (qStartIndex[j] == -1) {
 			break;
+		}
+		//if no existing process there 
+		if (procQueue[j][i%NPROC] == NULL) {
+			continue;
 		}
 		//use wrap-around indexing
 		//check to make sure it hasnt used up its time slice and is runnable
 		if (procQueue[j][(i%NPROC)]->ticks >= timeSliceSize[j]) {
 			//demote
-			cprintf("demote\n");
+			//will never demote lvl 4 so dont worry
+			procQueue[j+1][(procCount[j+1]%NPROC)] = procQueue[j][(i%NPROC)];
+			procQueue[j][(i%NPROC)] = NULL;
+			//TODO: NOT SURE IF THIS WILL WORK WITH WRAP-AROUND INDEXING
+			procElems[j]--;
+			//TODO:set params and update the round robin pointer
+			procQueue[j+1][(procCount[j+1]%NPROC)]->priority = j+1;
+			procQueue[j+1][(procCount[j+1]%NPROC)]->ticks = 0;
+			procQueue[j+1][(procCount[j+1]%NPROC)]->wait_ticks = 0;
+			procQueue[j+1][(procCount[j+1]%NPROC)]->slice_ticks = 0;
+			robinPlace[j+1] = procQueue[j+1][(procCount[j+1]%NPROC)];
+			robinPlace[j] = NULL;
+			qStartIndex[j+1] = (procCount[j+1]%NPROC);
+			procCount[j+1]++;
+			procElems[j+1]++;
 		} else {
 			//check rrSliceSize and runnable etc
-			if (procQueue[j][(i%NPROC)]->slice_ticks >= rrSliceSize[j]) {
+			if ((procQueue[j][(i%NPROC)]->slice_ticks >= rrSliceSize[j]) && procElems[j] > 1) {
 				//move on to next proc in queue and reset rrSlice for proc, add to wait ticks
 				//might lose a tick if it is the only process
-				(procQueue[j][i]->slice_ticks) = 0;
-				(procQueue[j][i]->wait_ticks)++;
+				(procQueue[j][i%NPROC]->slice_ticks) = 0;
+				(procQueue[j][i%NPROC]->wait_ticks)++;
 			} else {
+				if ((procQueue[j][(i%NPROC)]->slice_ticks >= rrSliceSize[j])) {
+					(procQueue[j][i%NPROC]->slice_ticks) = 0;
+				}
 				//we are running this proc if it is the first one found
 				//otherwise we need to do wait tick/starvation stuff
-				if (foundRunP == 0) {
-					//TODO: NEED TO CHECK IF RUNNABLE
+				//TODO:update the roundrobin pointer
+				if (foundRunP == 0 && (procQueue[j][(i%NPROC)]->state == RUNNABLE )) {
 					foundRunP = 1;
 					runProc = procQueue[j][(i%NPROC)];
 					(runProc->slice_ticks)++;
 					(runProc->ticks)++;
+					(runProc->total_ticks[j])++;
+					robinPlace[j] = runProc;
+					qStartIndex[j] = (i%NPROC);
 					//reset the wait ticks
 					runProc->wait_ticks = 0;
 				}else {
@@ -356,14 +377,26 @@ scheduler(void)
 					(procQueue[j][(i%NPROC)]->wait_ticks)++;
 					if (procQueue[j][(i%NPROC)]->wait_ticks >= (10*timeSliceSize[j])) {
 						//promote the proc (boost)
-
+						//TODO: needs to be in diff func
+						
 					}
 				}
 			}
 		}
     	}
     }
-
+    //cprintf("Please no: %d\n", runProc);
+    if (runProc != NULL) {
+	proc = runProc;
+	switchuvm(runProc);
+        runProc->state = RUNNING;
+        swtch(&cpu->scheduler, proc->context);
+        switchkvm();
+        // Process is done running for now.
+        // It should have changed its p->state before coming back.
+        proc = 0;
+    }
+    /*
     //og code
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
     	if(p->state != RUNNABLE)
@@ -380,6 +413,7 @@ scheduler(void)
       	// It should have changed its p->state before coming back.
       	proc = 0;
     	}
+	*/
     release(&ptable.lock);
 
   }
