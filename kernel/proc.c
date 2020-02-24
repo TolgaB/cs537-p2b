@@ -125,7 +125,6 @@ boostproc(void)
 
 int
 getprocinfo(struct pstat *temp) {
-	cprintf("getprocinfo called\n");
 	if (temp == NULL) {
 		return -1;
 	}
@@ -145,7 +144,9 @@ getprocinfo(struct pstat *temp) {
 		int opp = 0;
 		for (int j = 3; j >= 0; j--) {
 			temp->ticks[i][j] = p->total_ticks[opp];
-			temp->wait_ticks[i][j] = p->total_wait_ticks[opp];
+			if (opp == p->priority) {
+				temp->wait_ticks[i][j] = p->total_wait_ticks[opp];
+			}
 			opp++;	
 		}	
 		}
@@ -418,8 +419,11 @@ scheduler(void)
 				//move on to next proc in queue and reset rrSlice for proc, add to wait ticks
 				//might lose a tick if it is the only process
 				(procQueue[j][i%NPROC]->slice_ticks) = 0;
-				(procQueue[j][i%NPROC]->wait_ticks)++;
-				(procQueue[j][i%NPROC]->total_wait_ticks[j])++;
+				//TODO: JUST ADDED THIS
+				if ((procQueue[j][(i%NPROC)]->state) == RUNNABLE) {
+					(procQueue[j][i%NPROC]->wait_ticks)++;
+					(procQueue[j][i%NPROC]->total_wait_ticks[j])++;
+				}
 			} else {
 				if ((procQueue[j][(i%NPROC)]->slice_ticks >= rrSliceSize[j])) {
 					(procQueue[j][i%NPROC]->slice_ticks) = 0;
@@ -438,6 +442,8 @@ scheduler(void)
 					//reset the wait ticks
 					runProc->wait_ticks = 0;
 				}else {
+					//TODO: JUST ADDED THIS
+				   if ((procQueue[j][(i%NPROC)]->state) == RUNNABLE) {
 					//wait and starvation stuff here
 					(procQueue[j][(i%NPROC)]->wait_ticks)++;
 					(procQueue[j][(i%NPROC)]->total_wait_ticks[j])++;
@@ -449,6 +455,7 @@ scheduler(void)
 							boostproc();	
 						}
 					}
+				   }
 				}
 			}
 		}
