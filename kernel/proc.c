@@ -98,26 +98,28 @@ int
 boostproc(void)
 {
         if (proc->priority != 0) {
+	       int newPrior = (proc->priority - 1);
+	       int oldPrior = (proc->priority);
                //TODO: not sure about this indexing right here
-               procQueue[(proc->priority)-1][procCount[(proc->priority)-1]%NPROC] = proc;
+               procQueue[newPrior][procCount[newPrior]%NPROC] = proc;
                for (int i = 0; i < NPROC; i++) {
-                       if (procQueue[(proc->priority)][i] == proc) {
-                                procQueue[(proc->priority)][i] = NULL;
+                       if (procQueue[oldPrior][i] == proc) {
+                                procQueue[oldPrior][i] = NULL;
                        }
                }
-               if (robinPlace[(proc->priority)] == proc) {
+               if (robinPlace[oldPrior] == proc) {
                        //set to null so scheduler can generate new starting point
-                       robinPlace[(proc->priority)] = NULL;
+                       robinPlace[oldPrior] = NULL;
                 }
                //not highest priority
-               (procQueue[(proc->priority)-1][procCount[(proc->priority)-1]%NPROC])--;
-               procQueue[(proc->priority)-1][procCount[(proc->priority)-1]%NPROC] = 0;
-               procQueue[(proc->priority)-1][procCount[(proc->priority)-1]%NPROC] = 0;
-               procQueue[(proc->priority)-1][procCount[(proc->priority)-1]%NPROC] = 0;
-               procCount[(proc->priority)-1]++;
-               procElems[(proc->priority)-1]++;
-               procElems[(proc->priority)]--;
-               robinPlace[(proc->priority)-1] = procQueue[(proc->priority)-1][procCount[(proc->priority)-1]%NPROC];
+               (procQueue[newPrior][procCount[newPrior]%NPROC]->priority)--;
+               (procQueue[newPrior][procCount[newPrior]%NPROC]->wait_ticks) = 0;
+               (procQueue[newPrior][procCount[newPrior]%NPROC]->ticks) = 0;
+               (procQueue[newPrior][procCount[newPrior]%NPROC]->slice_ticks) = 0;
+               procCount[newPrior]++;
+               procElems[newPrior]++;
+               procElems[oldPrior]--;
+               robinPlace[newPrior] = procQueue[newPrior][procCount[newPrior]%NPROC];
         }
         return 0;
 }
@@ -409,8 +411,10 @@ scheduler(void)
 					if (procQueue[j][(i%NPROC)]->wait_ticks >= (10*timeSliceSize[j])) {
 						//promote the proc (boost)
 						//not sure what consequences of changing global is
-						proc = procQueue[j][(i%NPROC)];
-						boostproc();	
+						if (procQueue[j][(i%NPROC)]->priority != 0) {
+							proc = procQueue[j][(i%NPROC)];
+							boostproc();	
+						}
 					}
 				}
 			}
