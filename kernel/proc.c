@@ -92,6 +92,37 @@ found:
   return p;
 }
 
+
+
+int
+boostproc(void)
+{
+        if (proc->priority != 0) {
+               //TODO: not sure about this indexing right here
+               procQueue[(proc->priority)-1][procCount[(proc->priority)-1]%NPROC] = proc;
+               for (int i = 0; i < NPROC; i++) {
+                       if (procQueue[(proc->priority)][i] == proc) {
+                                procQueue[(proc->priority)][i] = NULL;
+                       }
+               }
+               if (robinPlace[(proc->priority)] == proc) {
+                       //set to null so scheduler can generate new starting point
+                       robinPlace[(proc->priority)] = NULL;
+                }
+               //not highest priority
+               (procQueue[(proc->priority)-1][procCount[(proc->priority)-1]%NPROC])--;
+               procQueue[(proc->priority)-1][procCount[(proc->priority)-1]%NPROC] = 0;
+               procQueue[(proc->priority)-1][procCount[(proc->priority)-1]%NPROC] = 0;
+               procQueue[(proc->priority)-1][procCount[(proc->priority)-1]%NPROC] = 0;
+               procCount[(proc->priority)-1]++;
+               procElems[(proc->priority)-1]++;
+               procElems[(proc->priority)]--;
+               robinPlace[(proc->priority)-1] = procQueue[(proc->priority)-1][procCount[(proc->priority)-1]%NPROC];
+        }
+        return 0;
+}
+
+
 // Set up first user process.
 void
 userinit(void)
@@ -377,15 +408,15 @@ scheduler(void)
 					(procQueue[j][(i%NPROC)]->wait_ticks)++;
 					if (procQueue[j][(i%NPROC)]->wait_ticks >= (10*timeSliceSize[j])) {
 						//promote the proc (boost)
-						//TODO: needs to be in diff func
-						
+						//not sure what consequences of changing global is
+						proc = procQueue[j][(i%NPROC)];
+						boostproc();	
 					}
 				}
 			}
 		}
     	}
     }
-    //cprintf("Please no: %d\n", runProc);
     if (runProc != NULL) {
 	proc = runProc;
 	switchuvm(runProc);
@@ -540,6 +571,7 @@ kill(int pid)
   release(&ptable.lock);
   return -1;
 }
+
 
 // Print a process listing to console.  For debugging.
 // Runs when user types ^P on console.
