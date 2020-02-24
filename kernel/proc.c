@@ -139,13 +139,13 @@ getprocinfo(struct pstat *temp) {
 	        //TODO: might be outside the else statement	
 		//not sure if needed for unused
 		temp->pid[i] = p->pid;
-		temp->priority[i] = p->priority;
 		temp->state[i] = p->state;
 		int opp = 0;
 		for (int j = 3; j >= 0; j--) {
 			temp->ticks[i][j] = p->total_ticks[opp];
 			if (opp == p->priority) {
-				temp->wait_ticks[i][j] = p->total_wait_ticks[opp];
+				temp->wait_ticks[i][j] = p->wait_ticks;
+				temp->priority[i] = j;
 			}
 			opp++;	
 		}	
@@ -365,6 +365,7 @@ scheduler(void)
     struct proc *runProc; 
     runProc = NULL; 
     int qStartIndex[4]; 
+
     for (int r = 0; r < 4; r++) {
 	    qStartIndex[r] = -1;
     }
@@ -422,10 +423,9 @@ scheduler(void)
 				//TODO: JUST ADDED THIS
 				if ((procQueue[j][(i%NPROC)]->state) == RUNNABLE) {
 					(procQueue[j][i%NPROC]->wait_ticks)++;
-					(procQueue[j][i%NPROC]->total_wait_ticks[j])++;
 				}
 			} else {
-				if ((procQueue[j][(i%NPROC)]->slice_ticks >= rrSliceSize[j])) {
+				if ((procQueue[j][(i%NPROC)]->slice_ticks >= rrSliceSize[j]) && (procQueue[j][(i%NPROC)]->state) == RUNNABLE ) {
 					(procQueue[j][i%NPROC]->slice_ticks) = 0;
 				}
 				//we are running this proc if it is the first one found
@@ -446,13 +446,12 @@ scheduler(void)
 				   if ((procQueue[j][(i%NPROC)]->state) == RUNNABLE) {
 					//wait and starvation stuff here
 					(procQueue[j][(i%NPROC)]->wait_ticks)++;
-					(procQueue[j][(i%NPROC)]->total_wait_ticks[j])++;
 					if (procQueue[j][(i%NPROC)]->wait_ticks >= (10*timeSliceSize[j])) {
 						//promote the proc (boost)
 						//not sure what consequences of changing global is
 						if (procQueue[j][(i%NPROC)]->priority != 0) {
 							proc = procQueue[j][(i%NPROC)];
-							boostproc();	
+							boostproc();
 						}
 					}
 				   }
