@@ -88,7 +88,6 @@ found:
   robinPlace[0] = procQueue[0][(procCount[0]%NPROC)];
   procCount[0]++;
   procElems[0]++;
-  cprintf("allocd proc LOL %d\n", p->pid);
   return p;
 }
 
@@ -122,6 +121,38 @@ boostproc(void)
                robinPlace[newPrior] = procQueue[newPrior][procCount[newPrior]%NPROC];
         }
         return 0;
+}
+
+int
+getprocinfo(struct pstat *temp) {
+	cprintf("getprocinfo called\n");
+	if (temp == NULL) {
+		return -1;
+	}
+	struct proc *p;
+	acquire(&ptable.lock);
+	int i = 0;
+	for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+		if (p->state == UNUSED) {
+			temp->inuse[i] = 0;
+		} else {
+		temp->inuse[i] = 1;
+	        //TODO: might be outside the else statement	
+		//not sure if needed for unused
+		temp->pid[i] = p->pid;
+		temp->priority[i] = p->priority;
+		temp->state[i] = p->state;
+		int opp = 0;
+		for (int j = 3; j >= 0; j--) {
+			temp->ticks[i][j] = p->total_ticks[opp];
+			temp->wait_ticks[i][j] = p->total_wait_ticks[opp];
+			opp++;	
+		}	
+		}
+		i++;
+	}
+	release(&ptable.lock);
+	return 0;
 }
 
 
@@ -388,6 +419,7 @@ scheduler(void)
 				//might lose a tick if it is the only process
 				(procQueue[j][i%NPROC]->slice_ticks) = 0;
 				(procQueue[j][i%NPROC]->wait_ticks)++;
+				(procQueue[j][i%NPROC]->total_wait_ticks[j])++;
 			} else {
 				if ((procQueue[j][(i%NPROC)]->slice_ticks >= rrSliceSize[j])) {
 					(procQueue[j][i%NPROC]->slice_ticks) = 0;
@@ -408,6 +440,7 @@ scheduler(void)
 				}else {
 					//wait and starvation stuff here
 					(procQueue[j][(i%NPROC)]->wait_ticks)++;
+					(procQueue[j][(i%NPROC)]->total_wait_ticks[j])++;
 					if (procQueue[j][(i%NPROC)]->wait_ticks >= (10*timeSliceSize[j])) {
 						//promote the proc (boost)
 						//not sure what consequences of changing global is

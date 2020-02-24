@@ -37,6 +37,21 @@ sys_kill(void)
 }
 
 int
+sys_boostproc(void) 
+{
+   return boostproc();
+}
+
+int 
+sys_getprocinfo(void)
+{
+  struct pstat *temp;
+  if (argptr(0,(void*)&temp, sizeof(*temp)) < 0)
+	  return -1;
+  return getprocinfo(temp);
+}
+
+int
 sys_getpid(void)
 {
   return proc->pid;

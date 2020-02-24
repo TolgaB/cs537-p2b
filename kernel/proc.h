@@ -79,6 +79,7 @@ struct proc {
   int priority;       //for mlfq priority
   int ticks;          // keep track of the ticks at one level
   int total_ticks[4]; // keep track of the accumulated ticks
+  int total_wait_ticks[4]; //keep track of the total amount of wait ticks at each level
   int wait_ticks;     //  keep track of the ticks waited at the current level
   int slice_ticks;
 };
