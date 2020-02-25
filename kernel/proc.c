@@ -84,8 +84,13 @@ found:
   }
   p->slice_ticks = 0;
   p->wait_ticks = 0;
-  procQueue[0][(procCount[0]%NPROC)] = p;
-  robinPlace[0] = procQueue[0][(procCount[0]%NPROC)];
+  for (int i = 0; i < NPROC; i++) {
+	  if (procQueue[0][(procCount[0]+i)%NPROC] == NULL || (procQueue[0][(procCount[0]+i)%NPROC]->state) == UNUSED) {
+  		procQueue[0][(procCount[0]+i)%NPROC] = p;
+  		robinPlace[0] = procQueue[0][(procCount[0]+i)%NPROC];
+		break;
+  	}
+  }
   procCount[0]++;
   procElems[0]++;
   return p;
@@ -100,7 +105,9 @@ boostproc(void)
 	       int newPrior = (proc->priority - 1);
 	       int oldPrior = (proc->priority);
                //TODO: not sure about this indexing right here
-	       procQueue[newPrior][procCount[newPrior]%NPROC] = proc;
+	    for (int m = 0; m < NPROC; m++) {
+             if (procQueue[newPrior][(procCount[newPrior]+m)%NPROC] == NULL || (procQueue[newPrior][(procCount[newPrior]+m)%NPROC]->state) == UNUSED) {
+	       procQueue[newPrior][(procCount[newPrior]+m)%NPROC] = proc;
                for (int i = 0; i < NPROC; i++) {
                        if (procQueue[oldPrior][i] == proc) {
                                 procQueue[oldPrior][i] = NULL;
@@ -111,16 +118,19 @@ boostproc(void)
                        robinPlace[oldPrior] = NULL;
                 }
                //not highest priority
-               (procQueue[newPrior][procCount[newPrior]%NPROC]->priority)--;
-               (procQueue[newPrior][procCount[newPrior]%NPROC]->wait_ticks) = 0;
-               (procQueue[newPrior][procCount[newPrior]%NPROC]->ticks) = 0;
-               (procQueue[newPrior][procCount[newPrior]%NPROC]->slice_ticks) = 0;
+               (procQueue[newPrior][(procCount[newPrior]+m)%NPROC]->priority)--;
+               (procQueue[newPrior][(procCount[newPrior]+m)%NPROC]->wait_ticks) = 0;
+               (procQueue[newPrior][(procCount[newPrior]+m)%NPROC]->ticks) = 0;
+               (procQueue[newPrior][(procCount[newPrior]+m)%NPROC]->slice_ticks) = 0;
                procCount[newPrior]++;
                procElems[newPrior]++;
                procElems[oldPrior]--;
-               robinPlace[newPrior] = procQueue[newPrior][procCount[newPrior]%NPROC];
-        }
-        return 0;
+               robinPlace[newPrior] = procQueue[newPrior][(procCount[newPrior]+m)%NPROC];
+	       return 0;
+	     }
+	    }
+	}
+        return -1;
 }
 
 int
@@ -401,23 +411,28 @@ scheduler(void)
 		if ((procQueue[j][(i%NPROC)]->ticks >= timeSliceSize[j]) && (j != 3)) {
 			//demote
 			//will never demote lvl 4 so dont worry
-			procQueue[j+1][(procCount[j+1]%NPROC)] = procQueue[j][(i%NPROC)];
+		    for (int m = 0; m < NPROC; m++) {
+		     if (procQueue[j+1][((procCount[j+1])+m)%NPROC] == NULL || (procQueue[j+1][((procCount[j+1])+m)%NPROC]->state) == UNUSED) {
+			procQueue[j+1][((procCount[j+1]+m)%NPROC)] = procQueue[j][(i%NPROC)];
 			procQueue[j][(i%NPROC)] = NULL;
 			//TODO: NOT SURE IF THIS WILL WORK WITH WRAP-AROUND INDEXING
 			procElems[j]--;
 			//TODO:set params and update the round robin pointer
-			procQueue[j+1][(procCount[j+1]%NPROC)]->priority = j+1;
-			procQueue[j+1][(procCount[j+1]%NPROC)]->ticks = 0;
-			procQueue[j+1][(procCount[j+1]%NPROC)]->wait_ticks = 0;
-			procQueue[j+1][(procCount[j+1]%NPROC)]->slice_ticks = 0;
+			procQueue[j+1][((procCount[j+1]+m)%NPROC)]->priority = j+1;
+			procQueue[j+1][((procCount[j+1]+m)%NPROC)]->ticks = 0;
+			procQueue[j+1][((procCount[j+1]+m)%NPROC)]->wait_ticks = 0;
+			procQueue[j+1][((procCount[j+1]+m)%NPROC)]->slice_ticks = 0;
 			//only update the demoted queues round robin start pointer if no others
 			if (qStartIndex[j+1] == -1) {
-				robinPlace[j+1] = procQueue[j+1][(procCount[j+1]%NPROC)];
-				qStartIndex[j+1] = (procCount[j+1]%NPROC);
+				robinPlace[j+1] = procQueue[j+1][((procCount[j+1]+m)%NPROC)];
+				qStartIndex[j+1] = ((procCount[j+1]+m)%NPROC);
 			}
 			robinPlace[j] = NULL;
 			procCount[j+1]++;
 			procElems[j+1]++;
+			break;
+		     }
+		    }
 		} else {
 			//check rrSliceSize and runnable etc
 			if ((procQueue[j][(i%NPROC)]->slice_ticks >= rrSliceSize[j]) && procElems[j] > 1) {
@@ -473,24 +488,6 @@ scheduler(void)
         // It should have changed its p->state before coming back.
         proc = 0;
     }
-    /*
-    //og code
-    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-    	if(p->state != RUNNABLE)
-        	continue;	
-      	// Switch to chosen process.  It is the process's job
-      	// to release ptable.lock and then reacquire it
-      	// before jumping back to us.
-      	proc = p;
-      	switchuvm(p);
-      	p->state = RUNNING;
-      	swtch(&cpu->scheduler, proc->context);
-      	switchkvm();
-      	// Process is done running for now.
-      	// It should have changed its p->state before coming back.
-      	proc = 0;
-    	}
-	*/
     release(&ptable.lock);
 
   }

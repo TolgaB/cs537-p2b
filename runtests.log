@@ -32,27 +32,27 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-usertests
-round_robin
-.__afs838E
-init
-wc
-ticks-test
-zombie
-single_job_long
-echo
 ln
-README
+usertests
 kill
-tester
-rm
-stressfs
+.__afs838E
 grep
-forktest
 mkdir
-ls
+rm
+zombie
 cat
+round_robin
+wc
+ls
+tester
+README
+forktest
 sh
+echo
+single_job_long
+ticks-test
+stressfs
+init
 balloc: first 500 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
@@ -93,27 +93,27 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-usertests
-round_robin
-.__afs838E
-init
-wc
-ticks-test
-zombie
-single_job_long
-echo
 ln
-README
+usertests
 kill
-tester
-rm
-stressfs
+.__afs838E
 grep
-forktest
 mkdir
-ls
+rm
+zombie
 cat
+round_robin
+wc
+ls
+tester
+README
+forktest
 sh
+echo
+single_job_long
+ticks-test
+stressfs
+init
 balloc: first 500 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
@@ -134,7 +134,7 @@ tester
 pid: 1 priority: 2
  	 level 3 ticks used 8
 	 level 3 ticks waited for 0
-	 level 2 ticks used 8
+	 level 2 ticks used 9
 	 level 2 ticks waited for 0
 	 level 1 ticks used 0
 	 level 1 ticks waited for 0
@@ -181,27 +181,27 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-usertests
-round_robin
-.__afs838E
-init
-wc
-ticks-test
-zombie
-single_job_long
-echo
 ln
-README
+usertests
 kill
-tester
-rm
-stressfs
+.__afs838E
 grep
-forktest
 mkdir
-ls
+rm
+zombie
 cat
+round_robin
+wc
+ls
+tester
+README
+forktest
 sh
+echo
+single_job_long
+ticks-test
+stressfs
+init
 balloc: first 503 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
@@ -221,19 +221,19 @@ $ tester
 tester
 pid: 1
 	 level 3 ticks used 8
-	 level 2 ticks used 8
+	 level 2 ticks used 9
 	 level 1 ticks used 0
 	 level 0 ticks used 0
 pid: 2
 	 level 3 ticks used 8
-	 level 2 ticks used 12
+	 level 2 ticks used 11
 	 level 1 ticks used 0
 	 level 0 ticks used 0
 pid: 3
 	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 49
+	 level 0 ticks used 45
 TEST PASSED
 
 test single_job_long PASSED (1 of 1)
@@ -257,27 +257,27 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-usertests
-round_robin
-.__afs838E
-init
-wc
-ticks-test
-zombie
-single_job_long
-echo
 ln
-README
+usertests
 kill
-tester
-rm
-stressfs
+.__afs838E
 grep
-forktest
 mkdir
-ls
+rm
+zombie
 cat
+round_robin
+wc
+ls
+tester
+README
+forktest
 sh
+echo
+single_job_long
+ticks-test
+stressfs
+init
 balloc: first 501 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
@@ -299,7 +299,7 @@ pid: 3 priority: 1
  	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 47
+	 level 0 ticks used 43
 TEST PASSED
 
 test boostproc PASSED (1 of 1)
@@ -323,27 +323,27 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-usertests
-round_robin
-.__afs838E
-init
-wc
-ticks-test
-zombie
-single_job_long
-echo
 ln
-README
+usertests
 kill
-tester
-rm
-stressfs
+.__afs838E
 grep
-forktest
 mkdir
-ls
+rm
+zombie
 cat
+round_robin
+wc
+ls
+tester
+README
+forktest
 sh
+echo
+single_job_long
+ticks-test
+stressfs
+init
 balloc: first 501 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
@@ -365,7 +365,7 @@ pid: 3 priority: 0
  	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 49
+	 level 0 ticks used 44
 pid: 4 priority: 3
  	 level 3 ticks used 1
 	 level 2 ticks used 0
@@ -394,27 +394,27 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-usertests
-round_robin
-.__afs838E
-init
-wc
-ticks-test
-zombie
-single_job_long
-echo
 ln
-README
+usertests
 kill
-tester
-rm
-stressfs
+.__afs838E
 grep
-forktest
 mkdir
-ls
+rm
+zombie
 cat
+round_robin
+wc
+ls
+tester
+README
+forktest
 sh
+echo
+single_job_long
+ticks-test
+stressfs
+init
 balloc: first 502 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
@@ -484,7 +484,7 @@ pid: 5
 	 level 2 waited for ticks 0
 	 level 1 ticks used 32
 	 level 1 waited for ticks 0
-	 level 0 ticks used 26
+	 level 0 ticks used 27
 	 level 0 waited for ticks 0
 pid: 6
 	 level 3 ticks used 8
@@ -493,7 +493,7 @@ pid: 6
 	 level 2 waited for ticks 0
 	 level 1 ticks used 32
 	 level 1 waited for ticks 0
-	 level 0 ticks used 25
+	 level 0 ticks used 26
 	 level 0 waited for ticks 0
 pid: 7
 	 level 3 ticks used 8
@@ -502,7 +502,7 @@ pid: 7
 	 level 2 waited for ticks 0
 	 level 1 ticks used 32
 	 level 1 waited for ticks 0
-	 level 0 ticks used 27
+	 level 0 ticks used 26
 	 level 0 waited for ticks 0
 pid: 4
 	 level 3 ticks used 8
@@ -520,7 +520,7 @@ pid: 5
 	 level 2 waited for ticks 0
 	 level 1 ticks used 32
 	 level 1 waited for ticks 0
-	 level 0 ticks used 26
+	 level 0 ticks used 27
 	 level 0 waited for ticks 0
 pid: 6
 	 level 3 ticks used 8
@@ -529,7 +529,7 @@ pid: 6
 	 level 2 waited for ticks 0
 	 level 1 ticks used 32
 	 level 1 waited for ticks 0
-	 level 0 ticks used 25
+	 level 0 ticks used 26
 	 level 0 waited for ticks 0
 pid: 7
 	 level 3 ticks used 8
@@ -538,7 +538,7 @@ pid: 7
 	 level 2 waited for ticks 0
 	 level 1 ticks used 32
 	 level 1 waited for ticks 0
-	 level 0 ticks used 27
+	 level 0 ticks used 26
 	 level 0 waited for ticks 0
 pid: 4
 	 level 3 ticks used 8
@@ -556,7 +556,7 @@ pid: 5
 	 level 2 waited for ticks 0
 	 level 1 ticks used 32
 	 level 1 waited for ticks 0
-	 level 0 ticks used 26
+	 level 0 ticks used 27
 	 level 0 waited for ticks 0
 pid: 6
 	 level 3 ticks used 8
@@ -565,7 +565,7 @@ pid: 6
 	 level 2 waited for ticks 0
 	 level 1 ticks used 32
 	 level 1 waited for ticks 0
-	 level 0 ticks used 25
+	 level 0 ticks used 26
 	 level 0 waited for ticks 0
 pid: 7
 	 level 3 ticks used 8
@@ -574,7 +574,7 @@ pid: 7
 	 level 2 waited for ticks 0
 	 level 1 ticks used 32
 	 level 1 waited for ticks 0
-	 level 0 ticks used 27
+	 level 0 ticks used 26
 	 level 0 waited for ticks 0
 TEST PASSED
 
@@ -599,27 +599,27 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-usertests
-round_robin
-.__afs838E
-init
-wc
-ticks-test
-zombie
-single_job_long
-echo
 ln
-README
+usertests
 kill
-tester
-rm
-stressfs
+.__afs838E
 grep
-forktest
 mkdir
-ls
+rm
+zombie
 cat
+round_robin
+wc
+ls
+tester
+README
+forktest
 sh
+echo
+single_job_long
+ticks-test
+stressfs
+init
 balloc: first 502 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
@@ -691,7 +691,7 @@ pid: 4
 	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 268
+	 level 0 ticks used 270
 pid: 5
 	 level 3 ticks used 8
 	 level 2 ticks used 16
@@ -701,17 +701,17 @@ pid: 4
 	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 268
+	 level 0 ticks used 270
 pid: 5
 	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 120
+	 level 0 ticks used 121
 pid: 4
 	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 268
+	 level 0 ticks used 270
 pid: 5
 	 level 3 ticks used 8
 	 level 2 ticks used 16
@@ -721,7 +721,7 @@ pid: 4
 	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 268
+	 level 0 ticks used 270
 pid: 5
 	 level 3 ticks used 8
 	 level 2 ticks used 16
@@ -731,7 +731,7 @@ pid: 4
 	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 268
+	 level 0 ticks used 270
 pid: 5
 	 level 3 ticks used 8
 	 level 2 ticks used 16
@@ -741,7 +741,7 @@ pid: 4
 	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 268
+	 level 0 ticks used 270
 pid: 5
 	 level 3 ticks used 8
 	 level 2 ticks used 16
@@ -751,7 +751,7 @@ pid: 4
 	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 268
+	 level 0 ticks used 270
 pid: 5
 	 level 3 ticks used 8
 	 level 2 ticks used 16
@@ -780,27 +780,27 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-usertests
-round_robin
-.__afs838E
-init
-wc
-ticks-test
-zombie
-single_job_long
-echo
 ln
-README
+usertests
 kill
-tester
-rm
-stressfs
+.__afs838E
 grep
-forktest
 mkdir
-ls
+rm
+zombie
 cat
+round_robin
+wc
+ls
+tester
+README
+forktest
 sh
+echo
+single_job_long
+ticks-test
+stressfs
+init
 balloc: first 502 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
@@ -821,14 +821,14 @@ tester
 	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 32
-	 level 0 ticks used 119
+	 level 0 ticks used 117
 	 The priority of the parent process is 1
 After priority gets updated and scheduled for some time
 pid: 3
 	 level 3 ticks used 8
 	 level 2 ticks used 16
 	 level 1 ticks used 64
-	 level 0 ticks used 188
+	 level 0 ticks used 186
 TEST PASSED
 
 test priority_boost PASSED (1 of 1)
@@ -852,27 +852,27 @@ ld  -m    elf_i386 -nostdlib --omagic --entry=main --section-start=.text=0x0 --o
 cp user/bin/tester fs/tester
 ./tools/mkfs fs.img fs
 used 29 (bit 1 ninode 26) free 29 total 1024
-usertests
-round_robin
-.__afs838E
-init
-wc
-ticks-test
-zombie
-single_job_long
-echo
 ln
-README
+usertests
 kill
-tester
-rm
-stressfs
+.__afs838E
 grep
-forktest
 mkdir
-ls
+rm
+zombie
 cat
+round_robin
+wc
+ls
+tester
+README
+forktest
 sh
+echo
+single_job_long
+ticks-test
+stressfs
+init
 balloc: first 501 blocks have been allocated
 balloc: write bitmap block at sector 28
 rm user/bin/tester
